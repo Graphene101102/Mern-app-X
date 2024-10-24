@@ -17,7 +17,7 @@ const Post = ({ post }) => {
 
     const handleDeletePost = () => { };
     const handleLikePost = () => { !isLiked };
-    const handlePostComment = () => { };
+    const handlePostComment = (e) => { e.preventDefault();};
 
     return (
         <>

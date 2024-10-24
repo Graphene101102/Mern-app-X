@@ -1,9 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
-import Loginpage from './pages/auth/login/LoginPage'
+import LoginPage from './pages/auth/login/LoginPage'
 import HomePage from './pages/home/HomePage'
 import SignUpPage from './pages/auth/signup/SignUpPage'
 import Sidebar from './components/common/Sidebar'
 import RightPanel from './components/common/RightPanel'
+import NotificationPage from './pages/notification/NotificationPage'
+import ProfilePage from './pages/profile/ProfilePage'
 
 
 function App() {
@@ -13,7 +15,9 @@ function App() {
         <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/signup' element={<SignUpPage />} />
-            <Route path='/login' element={<Loginpage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/notification' element={<NotificationPage />} />
+            <Route path='/profile/:username' element={<ProfilePage />} />
         </Routes>
             <RightPanel />
     </div>

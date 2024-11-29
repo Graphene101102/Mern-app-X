@@ -12,13 +12,13 @@ export const signup = async (req, res) => {
             return res.status(400).json({ error: "Invalid email format" });
         }
 
-        //check email
+        //validate email
         const existingEmail = await User.findOne({ email });
         if (existingEmail) {
             return res.status(400).json({ error: "Email is already taken" });
         }
 
-        // check username 
+        // validate username 
         const existingUser = await User.findOne({ username });
         if (existingUser) {
             return res.status(400).json({ error: "Username is already taken" });

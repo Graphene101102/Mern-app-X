@@ -135,7 +135,7 @@ export const deletePost = async (req, res) => {
 
 export const getAllPost = async (req, res) => {
     try {
-        const posts = await Post.find().sort({ createAt: -1 }).populate({
+        const posts = await Post.find().sort({ createdAt: -1 }).populate({
             path: "user",
             select: "-password"
         }).populate({

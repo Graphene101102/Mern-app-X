@@ -3,45 +3,52 @@ import PostSkeleton from "../skeletons/PostSkeleton";
 import {  useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-const Posts = ({ feedType }) => {
+const Posts = ({ feedType, username, userId }) => {
 
-	const getPostEndPoint = () => {
+	const getPostEndpoint = () => {
 		switch (feedType) {
 			case "forYou":
-				return "api/post/getAll";
+				return "/api/post/getAll";
 			case "following":
-				return "api/post/following";
+				return "/api/post/following";
+			case "posts":
+				return `/api/post/user/${username}`;
+			case "likes":
+				return `/api/post/liked/${userId}`;
 			default:
-				return "api/post/getAll"
+				return "/api/post/getAll";
 		}
-	}
+	};
 
-	const POST_ENDPOINT = getPostEndPoint();
+	const POST_ENDPOINT = getPostEndpoint();
 
-	const {data: posts, isLoading, refetch, isRefetching } = useQuery({
+	const {
+		data: posts,
+		isLoading,
+		refetch,
+		isRefetching,
+	} = useQuery({
 		queryKey: ["posts"],
 		queryFn: async () => {
 			try {
 				const res = await fetch(POST_ENDPOINT);
 				const data = await res.json();
 
-				if(!res.ok){
-					throw new Error(data.error || "Sonething went wrong")
+				if (!res.ok) {
+					throw new Error(data.error || "Something went wrong");
 				}
-				
-				console.log(data);
-				return data;
-				
-				
-			} catch (error) {
-				throw new Error(error)
-			}
-		}
-	})
 
-	useEffect (() => {
-		refetch()
-	}, [feedType, refetch])
+				return data;
+			} catch (error) {
+				throw new Error(error);
+			}
+		},
+	});
+
+	useEffect(() => {
+		refetch();
+	}, [feedType, refetch, username]);
+
 
 	return (
 		<>

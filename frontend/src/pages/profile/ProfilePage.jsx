@@ -12,6 +12,7 @@ import { MdEdit } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import useFollow from "../../hooks/useFollow";
 import { formatMemberSinceDate } from "../../utils/date";
+import useUpdateUserProfile from "../../hooks/useUpdateUserProfile";
 
 const ProfilePage = () => {
 	const [coverImg, setCoverImg] = useState(null);
@@ -47,7 +48,7 @@ const ProfilePage = () => {
 		},
 	});
 
-	// const { isUpdatingProfile, updateProfile } = useUpdateUserProfile();
+	const { isUpdatingProfile, updateProfile } = useUpdateUserProfile();
 
 	const isMyProfile = authUser._id === user?._id;
 	const memberSinceDate = formatMemberSinceDate(user?.createdAt);
@@ -147,14 +148,13 @@ const ProfilePage = () => {
 								{(coverImg || profileImg) && (
 									<button
 										className='btn btn-primary rounded-full btn-sm text-white px-4 ml-2'
-										onClick={async () => {
-											// await updateProfile({ coverImg, profileImg });
-											setProfileImg(null);
+										onClick={async () =>  {
+											await updateProfile({ coverImg, profileImg });
 											setCoverImg(null);
-										}}
+											setCoverImg(null)
+									}}
 									>
-										{/* {isUpdatingProfile ? "Updating..." : "Update"} */}
-										update
+										{isUpdatingProfile ? "Updating..." : "Update"}
 									</button>
 								)}
 							</div>
@@ -177,7 +177,6 @@ const ProfilePage = () => {
 													rel='noreferrer'
 													className='text-sm text-blue-500 hover:underline'
 												>
-													{/* Updated this after recording the video. I forgot to update this while recording, sorry, thx. */}
 													{user?.link}
 												</a>
 											</>
